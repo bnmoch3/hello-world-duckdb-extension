@@ -1,0 +1,23 @@
+# name: test/sql/fib.test
+# description: test fib extension
+# group: [fib]
+
+# Before we load the extension, this will fail
+statement error
+SELECT fib('Sam');
+----
+Catalog Error: Scalar Function with name fib does not exist!
+
+# Require statement will ensure this test is run with this extension loaded
+require fib
+
+# Confirm the extension works
+query I
+SELECT fib('Sam');
+----
+Fib Sam 🐥
+
+query I
+SELECT fib_openssl_version('Michael') ILIKE 'Fib Michael, my linked OpenSSL version is OpenSSL%';
+----
+true
